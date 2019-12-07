@@ -1,5 +1,5 @@
 .night {
-  background-color: #dad9d5;
+  background-color: #e3e3e3;
 }
 
 .window-container {
@@ -12,4 +12,9 @@
 
 .title-text {
   font-family: 'Caveat', cursive;
+}
+
+textarea { 
+  resize: vertical;
+  margin-top: 5em;
 }
