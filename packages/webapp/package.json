@@ -1,0 +1,35 @@
+{
+  "name": "webapp",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "backpack-react-scripts": "8.0.0-beta.97ca867",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "bpk-component-button": "^3.2.30",
+    "bpk-component-code": "^2.0.51",
+    "bpk-component-text": "^3.0.19",
+    "bpk-mixins": "^19.1.20",
+    "bpk-stylesheets": "^6.0.18"
+  }
+}
