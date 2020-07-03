@@ -1,54 +1,135 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Form, Button } from "react-bootstrap";
+import { request } from "graphql-request";
+import moment from "moment";
 
-class NightViewForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      amazing1: "",
-      amazing2: "",
-      amazing3: "",
-      todayBetter: ""
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+const QUERY_URL = "http://localhost:3000/graphql/";
+
+const NIGHT_VIEW_QUERY = `
+  query NightViewQuery($date: String!) {
+    night(date: $date) {
+      id
+      date
+      amazing1
+      amazing2
+      amazing3
+      dayBetter
+    }
   }
+`;
 
-  handleChange(event) {}
-
-  handleSubmit(event) {}
-
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <h5 className="align-center title title-text">
-          3 Amazing things that happened today...
-        </h5>
-        <div className="form-control">
-          <label>1.</label>
-          <input name="amazing1" type="text" onChange={this.handleChange} />
-          <label>2.</label>
-          <input name="amazing2" type="text" onChange={this.handleChange} />
-          <label>3.</label>
-          <input name="amazing3" type="text" onChange={this.handleChange} />
-        </div>
-
-        <h5 className="align-center title title-text">
-          How could I have made today even better?
-        </h5>
-        <div className="form-control">
-          <textarea
-            name="todaybetter"
-            type="text"
-            onChange={this.handleChange}
-          />
-        </div>
-
-        <button type='submit' value='submit' className='button-primary'>
-          Submit  
-        </button>
-      </form>
-    );
+const NIGHT_VIEW_SUBMIT_QUERY = `
+  mutation NightViewSubmit($date: String!, $amazing1: String, $amazing2: String, $amazing3: String, $dayBetter: String) {
+    saveNight(date: $date, amazing1: $amazing1, amazing2: $amazing2, amazing3: $amazing3, dayBetter: $dayBetter) {
+      id
+      date
+      amazing1
+      amazing2
+      amazing3
+      dayBetter
+    }
   }
-}
+`;
+
+const NightViewForm = ({date}) => {
+  let [amazing1, setAmazing1] = useState("");
+  let [amazing2, setAmazing2] = useState("");
+  let [amazing3, setAmazing3] = useState("");
+  let [todayBetter, setTodayBetter] = useState("");
+
+  useEffect(() => {
+    request(QUERY_URL, NIGHT_VIEW_QUERY, {
+      date: date,
+    }).then((data) => {
+      if (data.night) {
+        setAmazing1(data.night.amazing1);
+        setAmazing2(data.night.amazing2);
+        setAmazing3(data.night.amazing3);
+        setTodayBetter(data.night.dayBetter);
+      }
+    });
+  }, []);
+
+  const handleChange = (event) => {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+
+    switch (name) {
+      case "amazing1":
+        setAmazing1(value);
+        break;
+      case "amazing2":
+        setAmazing2(value);
+        break;
+      case "amazing3":
+        setAmazing3(value);
+        break;
+      case "todaybetter":
+        setTodayBetter(value);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    request(QUERY_URL, NIGHT_VIEW_SUBMIT_QUERY, {
+      date: date,
+      amazing1: amazing1,
+      amazing2: amazing2,
+      amazing3: amazing3,
+      dayBetter: todayBetter,
+    });
+  };
+
+  return (
+    <Form onSubmit={handleSubmit}>
+      <h5>3 Amazing things that happened today...</h5>
+      <Form.Group>
+        <Form.Label>1.</Form.Label>
+        <Form.Control
+          as="input"
+          name="amazing1"
+          value={amazing1}
+          type="text"
+          onChange={handleChange}
+        />
+        <Form.Label>2.</Form.Label>
+        <Form.Control
+          as="input"
+          name="amazing2"
+          type="text"
+          value={amazing2}
+          onChange={handleChange}
+        />
+        <Form.Label>3.</Form.Label>
+        <Form.Control
+          as="input"
+          name="amazing3"
+          type="text"
+          value={amazing3}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <h5>How could I have made today even better?</h5>
+      <Form.Group>
+        <Form.Control
+          as="textarea"
+          name="todaybetter"
+          type="text"
+          value={todayBetter}
+          onChange={handleChange}
+        />
+      </Form.Group>
+
+      <Button variant="primary" type="submit" block>
+        Submit
+      </Button>
+    </Form>
+  );
+};
 
 export default NightViewForm;

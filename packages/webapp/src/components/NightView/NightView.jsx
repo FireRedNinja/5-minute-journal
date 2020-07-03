@@ -1,21 +1,23 @@
 import React from "react";
-import DateHeading from "./DateHeading";
-import NightViewForm from "./NightViewForm";
+import DateHeading from "./../DateHeading/DateHeading";
+import NightViewForm from "./NightViewForm/NightViewForm";
 
-const NightView = () => {
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faMoon} from '@fortawesome/free-solid-svg-icons';
+import { Row, Col } from 'react-bootstrap';
+
+const NightView = ({date}) => {
   return (
     <div className="night">
-      <div className="window-container">
-        <div className="row">
-          <div className="col col-sm-2 float-left">
-            <i className="fas fa-moon fa-3x"></i>
-          </div>
-          <div className="col col-sm-10 align-center">
-            <DateHeading />
-          </div>
-        </div>
-        <NightViewForm />
-      </div>
+      <Row>
+        <Col xs='auto'>
+          <FontAwesomeIcon icon={faMoon} size='3x'/>
+        </Col>
+        <Col xs>
+          <DateHeading date={date}/>
+        </Col>
+      </Row>
+      <NightViewForm date={date}/>
     </div>
   );
 };

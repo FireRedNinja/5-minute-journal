@@ -1,11 +1,11 @@
 import React from 'react';
+import moment from 'moment';
 
-const date = new Date();
 
-const DateHeading = () => {
+const DateHeading = ({date}) => {
   return (
     <h3 className="title-text">
-      Date {date.getDate()}/{date.getMonth()}/{date.getFullYear()}
+      Date {moment(date).format("YYYY/MM/DD")}
     </h3>
   )
 }

@@ -1,26 +1,21 @@
-import React from 'react';
-import { BpkCode } from 'bpk-component-code';
-import BpkButton from 'bpk-component-button';
-import BpkText from 'bpk-component-text';
+import React from "react";
 
-import STYLES from './App.scss';
+import DayView from "../DayView/DayView";
+import NightView from "../NightView/NightView";
+import { Container } from "react-bootstrap";
+import { useState } from "react";
+import moment from "moment";
 
-const c = className => STYLES[className] || 'UNKNOWN';
+const App = () => {
+  const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
 
-const App = () => (
-  <div className={c('App')}>
-    <header className={c('App__header')}>
-      <div className={c('App__header-inner')}>
-        <BpkText tagName="h1" textStyle="xxl" className={c('App__heading')}>Welcome to React + Backpack</BpkText>
-      </div>
-    </header>
-    <main className={c('App__main')}>
-      <BpkText tagName="p" className={c('App__text')}>
-        To get started, edit <BpkCode>src/App.jsx</BpkCode> and save to reload.
-      </BpkText>
-      <BpkButton onClick={() => alert('It works!')}>Click me</BpkButton>
-    </main>
-  </div>
-);
+  return (
+    <Container>
+      <DayView date={date}/>
+      <br />
+      <NightView date={date}/>
+    </Container>
+  );
+};
 
 export default App;

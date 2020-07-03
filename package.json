@@ -7,10 +7,13 @@
   },
   "scripts": {
     "preinstall": "npm_config_registry=https://registry.npmjs.org/ npx ensure-node-env",
+    "start": "electron ./packages/server/bin/www",
     "copyAllNpmrcs": "for x in packages/server packages/webapp; do cp .npmrc $x; done;",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "electron": "^9.0.2",
+    "eslint-config-google": "^0.14.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.7"
   }

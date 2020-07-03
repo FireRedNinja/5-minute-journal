@@ -1,14 +1,18 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+// const logger = require('morgan');
+const {ApolloServer} = require('apollo-server-express');
+const {typeDefs} = require('./graphql/typeDefs');
+const {resolvers} = require('./graphql/resolvers');
+const models = require('./models');
 
 const assets = require('../webapp/build/asset-manifest.json');
 
-var indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index');
 
-var app = express();
+const app = express();
 
 /**
  * Set the `etag` to `false` to disable sesssion/tab based call caching
@@ -22,17 +26,25 @@ app.set('view engine', 'pug');
 
 // app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(
-  '/static',
-  express.static(path.join(__dirname, '../webapp/build/static'))
+    '/static',
+    express.static(path.join(__dirname, '../webapp/build/static')),
 );
 
 app.locals.assets = {
   mainCss: assets.files['main.css'],
   mainJs: assets.files['main.js'],
 };
+
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  context: {models},
+});
+
+server.applyMiddleware({app});
 
 app.use('/', indexRouter);
 

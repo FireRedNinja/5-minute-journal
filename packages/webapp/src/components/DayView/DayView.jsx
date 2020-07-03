@@ -1,24 +1,23 @@
 import React from "react";
-import DateHeading from "./DateHeading";
-import "../css/all.min.css";
-import "../css/main.css";
-import "../css/mustard-ui.min.css";
-import DayViewForm from './DayViewForm';
+import DateHeading from "./../DateHeading/DateHeading";
+import DayViewForm from './DayViewForm/DayViewForm';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faSun} from '@fortawesome/free-solid-svg-icons';
+import { Row, Col } from 'react-bootstrap';
 
-
-
-const DayView = () => (
-  <div className="window-container">
-    <div className="row">
-      <div className="col col-sm-2 float-left">
-        <i className="fas fa-sun fa-3x"></i>
-      </div>
-      <div className="col col-sm-10 align-center">
-        <DateHeading />
-      </div>
-    </div>
-    <DayViewForm />
-  </div>
+const DayView = ({date}) => (
+  <>
+    <Row>
+      <Col xs='auto'>
+          <FontAwesomeIcon icon={faSun} size='3x'/>
+      </Col>
+      <Col xs >
+          <DateHeading date={date}/>
+      </Col>
+      
+    </Row>
+    <DayViewForm date={date}/>
+  </>
 );
 
 export default DayView;
