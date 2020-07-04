@@ -3,16 +3,16 @@ const moment = require('moment');
 const resolvers = {
   Query: {
     day: async (parent, {date}, {models}, info) => {
-      const records = await models.Day.findOrCreate({
+      const record = await models.Day.findOne({
         where: {date: `${moment(date).format('YYYY-MM-DD')}`},
       });
-      return records[0];
+      return record;
     },
     night: async (parent, {date}, {models}, info) => {
-      const records = await models.Night.findOrCreate({
+      const record = await models.Night.findOne({
         where: {date: `${moment(date).format('YYYY-MM-DD')}`},
       });
-      return records[0];
+      return record;
     },
     allDays: (parent, args, {models}, info) => {
       return models.Day.findAll();
@@ -34,6 +34,15 @@ const resolvers = {
         great3: args.great3,
         iam: args.iam,
       };
+
+      const record = await models.Day.findOne({
+        where: {
+          date: args.date,
+        },
+      });
+      if (record) {
+        return record.update(day);
+      }
       return models.Day.create(day);
     },
     saveNight: async (parent, args, {models}, info) => {
@@ -44,16 +53,16 @@ const resolvers = {
         amazing3: args.amazing3,
         dayBetter: args.dayBetter,
       };
+
+      const record = await models.Day.findOne({
+        where: {
+          date: args.date,
+        },
+      });
+      if (record) {
+        return record.update(day);
+      }
       return models.Night.create(night);
-    },
-    deleteAll: async (parent, args, {models}, info) => {
-      await models.Day.destroy({
-        truncate: true,
-      });
-      await models.Night.destroy({
-        truncate: true,
-      });
-      return 'Done';
     },
   },
 };

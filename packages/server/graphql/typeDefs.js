@@ -47,7 +47,6 @@ const typeDefs = gql`
       amazing3: String
       dayBetter: String
     ): Night
-    deleteAll: String!
   }
 `;
 

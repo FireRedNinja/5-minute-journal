@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { request } from "graphql-request";
-import moment from "moment";
 
 const QUERY_URL = "http://localhost:3000/graphql/";
 
@@ -36,7 +35,7 @@ const DAY_VIEW_SUBMIT_QUERY = `
   }
 `;
 
-const DayViewForm = (props) => {
+const DayViewForm = ({date}) => {
   const [grateful1, setGrateful1] = useState("");
   const [grateful2, setGrateful2] = useState("");
   const [grateful3, setGrateful3] = useState("");
@@ -44,7 +43,6 @@ const DayViewForm = (props) => {
   const [great2, setGreat2] = useState("");
   const [great3, setGreat3] = useState("");
   const [iam, setIam] = useState("");
-  const [date, setDate] = useState(moment().format("YYYY-MM-DD"));
 
   useEffect(() => {
     request(QUERY_URL, DAY_VIEW_QUERY, {
@@ -60,7 +58,7 @@ const DayViewForm = (props) => {
         setIam(data.day.iam)
       }
     });
-  }, []);
+  }, [date]);
 
   const handleChange = (event) => {
     const target = event.target;

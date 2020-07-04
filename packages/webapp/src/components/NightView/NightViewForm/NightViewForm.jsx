@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { request } from "graphql-request";
-import moment from "moment";
 
 const QUERY_URL = "http://localhost:3000/graphql/";
 
@@ -48,7 +47,7 @@ const NightViewForm = ({date}) => {
         setTodayBetter(data.night.dayBetter);
       }
     });
-  }, []);
+  }, [date]);
 
   const handleChange = (event) => {
     const target = event.target;

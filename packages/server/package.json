@@ -8,7 +8,8 @@
     "dev:app:debug": "nodemon --inspect=0.0.0.0 ./bin/www",
     "format": "prettier . --write",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "db:clean": "node ./scripts/db-clean"
   },
   "dependencies": {
     "apollo-server-express": "^2.14.4",
