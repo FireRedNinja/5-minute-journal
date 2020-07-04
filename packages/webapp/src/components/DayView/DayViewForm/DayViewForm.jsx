@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import Button from '@material-ui/core/Button';
 import { request } from 'graphql-request';
 import PropTypes from 'prop-types';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import { Grid } from '@material-ui/core';
 
 const QUERY_URL = 'http://localhost:3000/graphql/';
 
@@ -108,78 +111,115 @@ const DayViewForm = ({ date }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h5>I am grateful for...</h5>
-      <Form.Group>
-        <Form.Label>1.</Form.Label>
-        <Form.Control
-          as="input"
-          name="grateful1"
-          value={grateful1}
-          type="text"
-          onChange={handleChange}
-        />
-        <Form.Label>2.</Form.Label>
-        <Form.Control
-          as="input"
-          name="grateful2"
-          value={grateful2}
-          type="text"
-          onChange={handleChange}
-        />
-        <Form.Label>3.</Form.Label>
-        <Form.Control
-          as="input"
-          name="grateful3"
-          value={grateful3}
-          type="text"
-          onChange={handleChange}
-        />
-      </Form.Group>
+    <form onSubmit={handleSubmit}>
+      <Grid container spacing={4}>
+        <Grid container item spacing={1}>
+          <Grid item>
+            <Typography variant="h5">I am grateful for...</Typography>
+          </Grid>
+          <Grid container item spacing={3}>
+            <Grid item xs={12}>
+              <TextField
+                name="grateful1"
+                value={grateful1}
+                type="text"
+                label="1."
+                onChange={handleChange}
+                variant="outlined"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="grateful2"
+                value={grateful2}
+                type="text"
+                label="2."
+                onChange={handleChange}
+                variant="outlined"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="grateful3"
+                value={grateful3}
+                type="text"
+                label="3."
+                onChange={handleChange}
+                variant="outlined"
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+        </Grid>
 
-      <h5>What would make today great?</h5>
-      <Form.Group>
-        <Form.Label>1.</Form.Label>
-        <Form.Control
-          as="input"
-          name="great1"
-          value={great1}
-          type="text"
-          onChange={handleChange}
-        />
-        <Form.Label>2.</Form.Label>
-        <Form.Control
-          as="input"
-          name="great2"
-          value={great2}
-          type="text"
-          onChange={handleChange}
-        />
-        <Form.Label>3.</Form.Label>
-        <Form.Control
-          as="input"
-          name="great3"
-          value={great3}
-          type="text"
-          onChange={handleChange}
-        />
-      </Form.Group>
+        <Grid container item spacing={1}>
+          <Grid item>
+            <Typography variant="h5">What would make today great?</Typography>
+          </Grid>
+          <Grid container item spacing={3}>
+            <Grid item xs={12}>
+              <TextField
+                name="great1"
+                value={great1}
+                type="text"
+                onChange={handleChange}
+                label="1."
+                variant="outlined"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="great2"
+                value={great2}
+                type="text"
+                onChange={handleChange}
+                label="2."
+                variant="outlined"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="great3"
+                value={great3}
+                type="text"
+                onChange={handleChange}
+                label="3."
+                variant="outlined"
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+        </Grid>
 
-      <h5>Daily affirmation. I am...</h5>
-      <Form.Group>
-        <Form.Control
-          as="textarea"
-          name="iam"
-          value={iam}
-          type="text"
-          onChange={handleChange}
-        />
-      </Form.Group>
+        <Grid container item spacing={1}>
+          <Grid item>
+            <Typography variant="h5">Daily affirmation. I am...</Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              multiline
+              rows={4}
+              name="iam"
+              value={iam}
+              type="text"
+              onChange={handleChange}
+              variant="outlined"
+              fullWidth
+            />
+          </Grid>
+        </Grid>
 
-      <Button variant="primary" type="submit" block>
-        Submit
-      </Button>
-    </Form>
+        <Grid item xs={12}>
+          <Button variant="contained" color="primary" type="submit" fullWidth>
+            Submit
+          </Button>
+        </Grid>
+      </Grid>
+    </form>
   );
 };
 

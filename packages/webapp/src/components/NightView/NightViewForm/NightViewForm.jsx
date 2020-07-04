@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import Button from '@material-ui/core/Button';
 import { request } from 'graphql-request';
 import PropTypes from 'prop-types';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import { Grid } from '@material-ui/core';
 
 const QUERY_URL = 'http://localhost:3000/graphql/';
 
@@ -85,50 +88,78 @@ const NightViewForm = ({ date }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h5>3 Amazing things that happened today...</h5>
-      <Form.Group>
-        <Form.Label>1.</Form.Label>
-        <Form.Control
-          as="input"
-          name="amazing1"
-          value={amazing1}
-          type="text"
-          onChange={handleChange}
-        />
-        <Form.Label>2.</Form.Label>
-        <Form.Control
-          as="input"
-          name="amazing2"
-          type="text"
-          value={amazing2}
-          onChange={handleChange}
-        />
-        <Form.Label>3.</Form.Label>
-        <Form.Control
-          as="input"
-          name="amazing3"
-          type="text"
-          value={amazing3}
-          onChange={handleChange}
-        />
-      </Form.Group>
+    <form onSubmit={handleSubmit}>
+      <Grid container spacing={4}>
+        <Grid container item spacing={1}>
+          <Grid item>
+            <Typography variant="h5">
+              3 Amazing things that happened today...
+            </Typography>
+          </Grid>
+          <Grid container item spacing={3}>
+            <Grid item xs={12}>
+              <TextField
+                name="amazing1"
+                value={amazing1}
+                type="text"
+                onChange={handleChange}
+                label="1."
+                variant="outlined"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="amazing2"
+                type="text"
+                value={amazing2}
+                onChange={handleChange}
+                label="2."
+                variant="outlined"
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                name="amazing3"
+                type="text"
+                value={amazing3}
+                onChange={handleChange}
+                label="3."
+                variant="outlined"
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+        </Grid>
 
-      <h5>How could I have made today even better?</h5>
-      <Form.Group>
-        <Form.Control
-          as="textarea"
-          name="todaybetter"
-          type="text"
-          value={todayBetter}
-          onChange={handleChange}
-        />
-      </Form.Group>
+        <Grid container item spacing={1}>
+          <Grid item>
+            <Typography variant="h5">
+              How could I have made today even better?
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              multiline
+              rows={4}
+              name="todaybetter"
+              type="text"
+              value={todayBetter}
+              onChange={handleChange}
+              variant="outlined"
+              fullWidth
+            />
+          </Grid>
+        </Grid>
 
-      <Button variant="primary" type="submit" block>
-        Submit
-      </Button>
-    </Form>
+        <Grid item xs={12}>
+          <Button variant="contained" color="primary" type="submit" fullWidth>
+            Submit
+          </Button>
+        </Grid>
+      </Grid>
+    </form>
   );
 };
 

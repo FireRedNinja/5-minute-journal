@@ -4,22 +4,24 @@ import NightViewForm from './NightViewForm/NightViewForm';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon } from '@fortawesome/free-solid-svg-icons';
-import { Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 
 const NightView = ({ date }) => {
   return (
-    <div className="night">
-      <Row>
-        <Col xs="auto">
+    <Grid container spacing={1}>
+      <Grid container item spacing={5}>
+        <Grid item xs="auto">
           <FontAwesomeIcon icon={faMoon} size="3x" />
-        </Col>
-        <Col xs>
+        </Grid>
+        <Grid item xs>
           <DateHeading date={date} />
-        </Col>
-      </Row>
-      <NightViewForm date={date} />
-    </div>
+        </Grid>
+      </Grid>
+      <Grid item>
+        <NightViewForm date={date} />
+      </Grid>
+    </Grid>
   );
 };
 
