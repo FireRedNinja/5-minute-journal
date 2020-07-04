@@ -16,5 +16,14 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.2.7"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "lint-staged": {
+    "packages/server/**/*.{js,jsx}": ["npm run lint:fix --prefix ./packages/server/", "npm run format --prefix ./packages/server/"],
+    "packages/webapp/**/*.{js,jsx}": ["npm run lint:fix --prefix ./packages/webapp/", "npm run format --prefix ./packages/webapp/"]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
 }
