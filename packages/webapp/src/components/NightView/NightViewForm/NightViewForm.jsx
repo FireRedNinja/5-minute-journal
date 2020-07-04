@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
-import { request } from "graphql-request";
+import React, { useState, useEffect } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import { request } from 'graphql-request';
+import PropTypes from 'prop-types';
 
-const QUERY_URL = "http://localhost:3000/graphql/";
+const QUERY_URL = 'http://localhost:3000/graphql/';
 
 const NIGHT_VIEW_QUERY = `
   query NightViewQuery($date: String!) {
@@ -30,11 +31,11 @@ const NIGHT_VIEW_SUBMIT_QUERY = `
   }
 `;
 
-const NightViewForm = ({date}) => {
-  let [amazing1, setAmazing1] = useState("");
-  let [amazing2, setAmazing2] = useState("");
-  let [amazing3, setAmazing3] = useState("");
-  let [todayBetter, setTodayBetter] = useState("");
+const NightViewForm = ({ date }) => {
+  const [amazing1, setAmazing1] = useState('');
+  const [amazing2, setAmazing2] = useState('');
+  const [amazing3, setAmazing3] = useState('');
+  const [todayBetter, setTodayBetter] = useState('');
 
   useEffect(() => {
     request(QUERY_URL, NIGHT_VIEW_QUERY, {
@@ -55,16 +56,16 @@ const NightViewForm = ({date}) => {
     const value = target.value;
 
     switch (name) {
-      case "amazing1":
+      case 'amazing1':
         setAmazing1(value);
         break;
-      case "amazing2":
+      case 'amazing2':
         setAmazing2(value);
         break;
-      case "amazing3":
+      case 'amazing3':
         setAmazing3(value);
         break;
-      case "todaybetter":
+      case 'todaybetter':
         setTodayBetter(value);
         break;
       default:
@@ -129,6 +130,10 @@ const NightViewForm = ({date}) => {
       </Button>
     </Form>
   );
+};
+
+NightViewForm.propTypes = {
+  date: PropTypes.string,
 };
 
 export default NightViewForm;

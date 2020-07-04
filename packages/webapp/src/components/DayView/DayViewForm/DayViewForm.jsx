@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Button, Form } from "react-bootstrap";
-import { request } from "graphql-request";
+import React, { useState, useEffect } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import { request } from 'graphql-request';
+import PropTypes from 'prop-types';
 
-const QUERY_URL = "http://localhost:3000/graphql/";
+const QUERY_URL = 'http://localhost:3000/graphql/';
 
 const DAY_VIEW_QUERY = `
   query DayViewQuery($date: String!) {
@@ -35,27 +36,27 @@ const DAY_VIEW_SUBMIT_QUERY = `
   }
 `;
 
-const DayViewForm = ({date}) => {
-  const [grateful1, setGrateful1] = useState("");
-  const [grateful2, setGrateful2] = useState("");
-  const [grateful3, setGrateful3] = useState("");
-  const [great1, setGreat1] = useState("");
-  const [great2, setGreat2] = useState("");
-  const [great3, setGreat3] = useState("");
-  const [iam, setIam] = useState("");
+const DayViewForm = ({ date }) => {
+  const [grateful1, setGrateful1] = useState('');
+  const [grateful2, setGrateful2] = useState('');
+  const [grateful3, setGrateful3] = useState('');
+  const [great1, setGreat1] = useState('');
+  const [great2, setGreat2] = useState('');
+  const [great3, setGreat3] = useState('');
+  const [iam, setIam] = useState('');
 
   useEffect(() => {
     request(QUERY_URL, DAY_VIEW_QUERY, {
       date: date,
     }).then((data) => {
       if (data.day) {
-        setGrateful1(data.day.grateful1)
-        setGrateful2(data.day.grateful2)
-        setGrateful3(data.day.grateful3)
-        setGreat1(data.day.great1)
-        setGreat2(data.day.great2)
-        setGreat3(data.day.great3)
-        setIam(data.day.iam)
+        setGrateful1(data.day.grateful1);
+        setGrateful2(data.day.grateful2);
+        setGrateful3(data.day.grateful3);
+        setGreat1(data.day.great1);
+        setGreat2(data.day.great2);
+        setGreat3(data.day.great3);
+        setIam(data.day.iam);
       }
     });
   }, [date]);
@@ -66,25 +67,25 @@ const DayViewForm = ({date}) => {
     const value = target.value;
 
     switch (name) {
-      case "grateful1":
+      case 'grateful1':
         setGrateful1(value);
         break;
-      case "grateful2":
+      case 'grateful2':
         setGrateful2(value);
         break;
-      case "grateful3":
+      case 'grateful3':
         setGrateful3(value);
         break;
-      case "great1":
+      case 'great1':
         setGreat1(value);
         break;
-      case "great2":
+      case 'great2':
         setGreat2(value);
         break;
-      case "great3":
+      case 'great3':
         setGreat3(value);
         break;
-      case "iam":
+      case 'iam':
         setIam(value);
         break;
       default:
@@ -103,7 +104,7 @@ const DayViewForm = ({date}) => {
       great2: great2,
       great3: great3,
       iam: iam,
-    })
+    });
   };
 
   return (
@@ -180,6 +181,10 @@ const DayViewForm = ({date}) => {
       </Button>
     </Form>
   );
+};
+
+DayViewForm.propTypes = {
+  date: PropTypes.string,
 };
 
 export default DayViewForm;

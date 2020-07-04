@@ -13,8 +13,8 @@
   },
   "devDependencies": {
     "electron": "^9.0.2",
-    "eslint-config-google": "^0.14.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.7"
-  }
+  },
+  "dependencies": {}
 }
