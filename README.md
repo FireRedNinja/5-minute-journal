@@ -1,5 +1,7 @@
 # 5 Minute Journal
 
+> This project is no longer being maintained
+
 A Journal App taken from [5 Minute Journal](https://www.intelligentchange.com/products/the-five-minute-journal).
 
 # Build
