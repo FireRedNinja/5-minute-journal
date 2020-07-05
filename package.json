@@ -1,57 +1,34 @@
 {
   "name": "5-minute-journal",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.3.0",
-    "@testing-library/react": "^10.0.1",
-    "@testing-library/user-event": "^10.0.1",
-    "electron-is-dev": "^1.1.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1"
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=14.3.0",
+    "npm": ">=6.14.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "electron-dev": "concurrently \"BROWSER=none npm run start\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "build --em.main=build/electron.js",
-    "preelectron-pack": "npm run build"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "preinstall": "npm_config_registry=https://registry.npmjs.org/ npx ensure-node-env",
+    "start": "npm run start --prefix ./packages/server/",
+    "copyAllNpmrcs": "for x in packages/server packages/webapp; do cp .npmrc $x; done;",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0",
-    "electron": "^8.2.0",
-    "electron-builder": "^22.4.1",
-    "wait-on": "^4.0.1"
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.7"
   },
-  "main": "public/main.js",
-  "build": {
-    "appId": "com.example.electron-cra",
-    "files": [
-      "build/**/*",
-      "node_modules/**/*"
+  "dependencies": {},
+  "lint-staged": {
+    "packages/server/**/*.{js,jsx}": [
+      "npm run lint:fix --prefix ./packages/server/",
+      "npm run format --prefix ./packages/server/"
     ],
-    "directories": {
-      "buildResources": "assets"
-    }
+    "packages/webapp/**/*.{js,jsx}": [
+      "npm run lint:fix --prefix ./packages/webapp/",
+      "npm run format --prefix ./packages/webapp/"
+    ]
   },
-  "author": "FireRedNinja",
-  "homepage": "./"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
 }
