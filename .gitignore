@@ -24,3 +24,6 @@ yarn-error.log*
 
 .npmrc
 .nvmrc
+
+# Electron-Forge
+out/
