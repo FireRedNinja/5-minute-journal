@@ -1,29 +1,82 @@
 {
   "name": "5-minute-journal",
   "version": "1.0.0",
+  "description": "My Electron application description",
+  "author": {
+    "name": "Noel Rajan"
+  },
   "engines": {
     "node": ">=14.3.0",
     "npm": ">=6.14.5"
   },
+  "main": "./index.js",
   "scripts": {
     "preinstall": "npm_config_registry=https://registry.npmjs.org/ npx ensure-node-env",
-    "start": "npm run start --prefix ./packages/server/",
-    "copyAllNpmrcs": "for x in packages/server packages/webapp; do cp .npmrc $x; done;",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "copyAllNpmrcs": "for x in ./webapp; do cp .npmrc $x; done;",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build --prefix ./webapp/ && npm run make",
+    "start": "concurrently \"cross-env BROWSER=none npm run start --prefix ./webapp/\" \"wait-on http://localhost:3000 && electron-forge start\"",
+    "electron-start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\"",
+    "db:clean": "node ./scripts/db-clean.js"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "desktop"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.52",
+    "@electron-forge/maker-deb": "^6.0.0-beta.52",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.52",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.52",
+    "@electron-forge/maker-zip": "^6.0.0-beta.52",
+    "concurrently": "^5.2.0",
+    "electron": "9.1.1",
     "husky": "^4.2.5",
-    "lint-staged": "^10.2.7"
+    "lint-staged": "^10.2.7",
+    "sequelize-cli": "^6.2.0",
+    "wait-on": "^5.1.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "apollo-server": "^2.16.0",
+    "cross-env": "^7.0.2",
+    "electron-is-dev": "^1.2.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "graphql": "^15.3.0",
+    "moment": "^2.27.0",
+    "sequelize": "^6.3.3",
+    "sqlite3": "^5.0.0"
+  },
   "lint-staged": {
-    "packages/server/**/*.{js,jsx}": [
-      "npm run lint:fix --prefix ./packages/server/",
-      "npm run format --prefix ./packages/server/"
-    ],
-    "packages/webapp/**/*.{js,jsx}": [
-      "npm run lint:fix --prefix ./packages/webapp/",
-      "npm run format --prefix ./packages/webapp/"
+    "webapp/**/*.{js,jsx}": [
+      "npm run lint:fix --prefix ./webapp/",
+      "npm run format --prefix ./webapp/"
     ]
   },
   "husky": {
